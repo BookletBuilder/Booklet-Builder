@@ -1,4 +1,0 @@
-#package = Media
-name = Content type type
-description = Allows modules to provide checkboxes in each content type form so that module developers could match up module functionality to content types.  
-core = 7.x

@@ -1,8 +1,0 @@
-<?php
-
-function typetype_test2_typetype () {
- return array(
-   'test2' => array('title' => 'Test 2'),
-   'test3' => array('title' => 'Test 3')
- );
-}
