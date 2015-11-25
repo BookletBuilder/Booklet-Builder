@@ -1,0 +1,13 @@
+@CHARSET "ISO-8859-1";
+
+.wami {
+}
+.wami .wamiContainer {
+}
+.wami .wamiRecorder {
+  display: inline-block;
+}
+
+.wami .wamiPlayer {
+  display: inline-block;
+}

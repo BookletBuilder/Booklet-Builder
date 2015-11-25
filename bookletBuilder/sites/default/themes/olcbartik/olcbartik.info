@@ -1,0 +1,36 @@
+package = .OLC
+base theme = bartik
+name = OLC Bartik
+description = Custom overrides of base Bartik theme. 
+version = VERSION
+core = 7.x
+
+stylesheets[all][] = css/colors.css
+stylesheets[all][] = css/color-overrides.css
+stylesheets[all][] = css/color-overrides-olckb-toolbar.css
+stylesheets[all][] = css/font-overrides.css
+stylesheets[all][] = css/form-overrides.css
+stylesheets[all][] = css/olcbartik.css
+stylesheets[all][] = css/page.css
+stylesheets[all][] = css/user-menu.css
+
+regions[header] = Header
+regions[help] = Help
+regions[page_top] = Page top
+regions[page_bottom] = Page bottom
+regions[highlighted] = Highlighted
+
+regions[featured] = Featured
+regions[content] = Content
+regions[sidebar_first] = Sidebar first
+regions[sidebar_second] = Sidebar second
+
+regions[triptych_first] = Triptych first
+regions[triptych_middle] = Triptych middle
+regions[triptych_last] = Triptych last
+
+regions[footer_firstcolumn] = Footer first column
+regions[footer_secondcolumn] = Footer second column
+regions[footer_thirdcolumn] = Footer third column
+regions[footer_fourthcolumn] = Footer fourth column
+regions[footer] = Footer

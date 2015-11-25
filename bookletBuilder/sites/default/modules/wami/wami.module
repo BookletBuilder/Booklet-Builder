@@ -1,0 +1,68 @@
+<?php
+
+// Run the client to record the audio
+// Simply saves a file sent to standard input
+// Display a "remove" button
+// Upon remove, display the WAMI recorder again
+
+module_load_include('inc', 'wami', 'wami.field');
+
+function wami_init() {
+  drupal_add_js('sites/all/libraries/swfobject/src/swfobject.js');
+  drupal_add_js('sites/all/libraries/wami/gui.js');
+  drupal_add_js('sites/all/libraries/wami/recorder.js');
+  drupal_add_js(drupal_get_path('module', 'wami') . '/wami.js');
+  drupal_add_css(
+    drupal_get_path('module', 'wami') . '/wami.css',
+    array('group' => CSS_DEFAULT, 'every_page' => TRUE)
+  );
+}
+
+function wami_theme($existing, $type, $theme, $path) {
+  
+  $path = drupal_get_path('module', 'wami');
+  $base = array(
+    'path' => $path . '/theme',
+  );
+  
+  $hooks = array();
+  $hooks ['wami_recorder'] = $base + array(
+    'template' => 'wami-recorder',
+    'variables' => array(
+      'widget_id' => 'wami',
+      'record_url' => url('wami-record', array('absolute' => TRUE)),
+      'play_url' => url('wami-play', array('absolute' => TRUE)),
+      'wami_session_key' => 'WAMI-SESSION-KEY'
+    ),
+  ); 
+  return $hooks;
+  
+}
+
+function wami_menu() {
+  return array(
+    'wami-endpoint' => array(
+      'page callback' => '_wami_endpoint',
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+    	'file' => 'includes/wami-endpoints.inc',
+    ),
+  );
+}
+
+function wami_jam_session_set($key, $file) {
+  $_SESSION['wami']['session'][$key] = $file;
+}
+
+function wami_jam_session_get($key, $fallback = NULL) {
+  if (isset($_SESSION['wami']['session'][$key])) {
+    return $_SESSION['wami']['session'][$key];
+  }
+  else {
+    return $fallback;
+  }
+}
+
+function wami_jam_session_unset($key) {
+  unset($_SESSION['wami']['session'][$key]);
+}

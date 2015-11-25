@@ -1,0 +1,32 @@
+﻿/* Header */
+/* Main */
+/* Button - Dark */
+/* Button - Medium */
+/* Button - Light */
+.olckb-toolbar .widget .group {
+  border: 1px solid black;
+}
+
+.region-page-top .olckb-toolbar {
+  /* Same as header */
+  background-color: #718d9d;
+}
+
+.region-page-top .olckb-toolbar .widget {
+  /* Same as header */
+  background-color: #4D7184;
+}
+
+.region-page-top .olckb-toolbar .widget a.button {
+  /* Button color */
+  background: #b6d8ea;
+  color: #4D7184;
+}
+
+.region-page-top .olckb-toolbar .widget a.button:hover {
+  /* Highlighted button color */
+  background: white;
+  color: #4D7184;
+}
+
+/*# sourceMappingURL=color-overrides-olckb-toolbar.css.map */

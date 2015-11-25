@@ -1,0 +1,77 @@
+<?php
+
+function newid($method = 'newid_default', $options = array()) {
+
+  $when = microtime();
+
+  $hooks = module_invoke_all('newid_methods');
+
+  $method_key = array_key_exists($method, $hooks) ? $method : 'newid_default';
+  $hook = $hooks[$method_key];
+
+  $method_callback = $hook['id callback'];
+  $method_options = array_merge_recursive($hook['id arguments'], $options);
+  $result = call_user_func($method_callback, $method_options);
+
+  // Log results
+  // TODO: Record who, what, when, where, why
+
+  return $result;
+
+}
+
+function newid_menu() {
+  return array(
+    'newid' => array(
+      'page title' => 'New ID',
+      'page callback' => '_newid_page',
+      'page arguments' => array('newid_default'),
+      'delivery callback' => '_newid_page_display',
+      'access callback' => TRUE,
+    ),
+    'newid/%' => array(
+      'page title' => 'New ID',
+      'page callback' => '_newid_page',
+      'page arguments' => array(1),
+      'delivery callback' => '_newid_page_display',
+    ),
+  );
+}
+
+function _newid_page($method) {
+  return newid($method);
+}
+
+function _newid_page_display($content) {
+  header('Content-type: text/plain');
+  echo $content;
+  module_invoke_all('exit');
+  exit;
+}
+
+function newid_newid_methods() {
+  return array(
+    'newid_default' => array(
+      'id callback' => '_newid',
+      'id arguments' => array(),
+    ),
+  );
+}
+
+function newid_newid_compression_methods() {
+  return array(
+    'newid_no_compress' => array(
+      'compress callback' => '_newid_no_compress',
+      'compress arguments' => array(),
+    ),
+  );
+}
+
+function _newid($options) {
+  return md5(microtime());
+}
+
+function _newid_no_compress($input, $options) {
+  return $input;
+}
+

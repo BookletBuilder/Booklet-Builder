@@ -1,0 +1,5 @@
+package = Media
+name = WAMI
+description = Support for the WAMI audio recorder
+dependencies[] = filefield_sources
+core = 7.x

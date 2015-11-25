@@ -1,0 +1,157 @@
+<?php
+/**
+ * A matrix of "content types" and "keys".
+ * 
+ * This can be used for identifying whether a node type should be associated
+ * with a particular module feature.
+ * 
+ * Usage:
+ * 
+ * function MYMODULE_typetype() {
+ *   return array(
+ *     'key 1' => array('title' => 'Key 1'),
+ *     'key 2' => array('title' => 'Key 2'),
+ *   );
+ * }
+ *
+ * This would create checkboxes for each content type.
+ * Whether they are turned on or off is up to the administrator.
+ * 
+ * ----------------------------
+ * Key\Types  Page  Story  Book
+ * ----------------------------
+ * key1         X     X     X
+ * key2               X
+ * key3                     X
+ * ----------------------------
+ *
+ * These functions are also available:
+ * 
+ *   typetype_is_on('page', 'key');
+ *   typetype_on('page', 'key');
+ *   typetype_off('page', 'key');
+ * 
+ */
+
+function typetype_get_typetypes () {
+  $result = array();
+  foreach (module_implements('typetype') as $module) {
+    $typetypes = module_invoke($module, 'typetype');
+    foreach ($typetypes as $new_key => $new_value) {
+      $new_value['module'] = $module;
+     if (array_key_exists($new_key, $result)) {
+        drupal_set_message(t('Module "!module_new" is about to override typetype "!typetype" defined defined in module "!module_old"', array(
+          '!typetype' => $new_key, 
+          '!module_old' => $result[$new_key]['module'],
+          '!module_new' => $new_value['module']
+        )), 'warning');
+      }
+      else {
+        // Do nothing
+      }
+      $result[$new_key] = $new_value;
+    }
+  }
+  return $result;
+}
+
+function typetype_form_node_type_form_alter(&$form, $form_state) {
+  // Build a matrix of "content types" and "keys"
+  // by adding each typetype to the content type form 
+  $typetypes = typetype_get_typetypes();
+  $form['typetype'] = array(
+    '#type' => 'fieldset',
+    '#title' => 'Type flags',
+    '#group' => 'additional_settings',
+  );
+  foreach ($typetypes as $typetype_key => $typetype_value) {
+    $typetype_form_key = 'typetype_'.$typetype_key;
+    $form['typetype'][$typetype_form_key]= array(
+      '#type' => 'checkbox',
+      '#title' => $typetype_value['title'], // . ' ('.$typetype_form_key.')',
+      '#default_value' => typetype_is_on($form['#node_type']->type, $typetype_key)
+    );
+  }
+}
+
+function typetype_node_type_save($bundle_name) {
+  $typetypes = typetype_get_typetypes();
+  foreach ($typetypes as $typetype_key => $typetype_value) {
+    $node_type_key = 'typetype_'.$typetype_key.'_'.$bundle_name; 
+    $node_type_value = variable_get($node_type_key, 'undefined');
+    if ($node_type_value !== 'undefined') {
+      if ($node_type_value == TRUE) {
+        typetype_on($bundle_name, $typetype_key);
+      }
+      else {
+        typetype_off($bundle_name, $typetype_key);
+      }
+      //dpm('Node type form variable: ' . print_r(variable_get($node_type_key, 'undefined'), TRUE));
+      variable_del($node_type_key);
+    }
+    else {
+      // Variable already removed
+      //dpm('Variable already removed: ' . $node_type_value);
+    }
+    
+  }
+}
+function typetype_node_type_insert($info) {
+  typetype_node_type_save($info->type);
+}
+function typetype_node_type_load($info) {
+}
+function typetype_node_type_update($info) {
+  typetype_node_type_save($info->type);
+}
+function typetype_node_type_delete($info) {
+  $typetypes = typetype_get_typetypes();
+  foreach ($typetypes as $typetype_key => $typetype_value) {
+    
+    $special_key = 'typetype_'.$typetype_key.'_'.$bundle_name; 
+    variable_del($special_key);
+    
+    $typetype_data = variable_get('typetype', array());
+    unset($typetype_data[$info->type]);
+    variable_set('typetype', $typetype_data);
+    
+  }
+}
+
+function typetype_is_on($node_type, $typetype) {
+  $valid_typetypes = typetype_get_typetypes();
+  if (array_key_exists($typetype, $valid_typetypes)) {
+    $typetype_data = variable_get('typetype', array());
+    return isset($typetype_data[$node_type][$typetype]) ? $typetype_data[$node_type][$typetype] : FALSE;
+  }
+  else {
+    drupal_set_message(t('Invalid typetype (!func): !typetype', array(
+      '!typetype' => $typetype,
+      '!func' => __FUNCTION__
+    )), 'warning');
+    return FALSE;
+  }
+}
+
+function typetype_on($node_type, $typetype) {
+  _typetype_boolean($node_type, $typetype, TRUE);
+}
+
+function typetype_off($node_type, $typetype) {
+  _typetype_boolean($node_type, $typetype, FALSE);
+}
+
+function _typetype_boolean($node_type, $typetype, $bool) {
+  $valid_typetypes = typetype_get_typetypes();
+  if (array_key_exists($typetype, $valid_typetypes)) {
+    $typetype_data = variable_get('typetype', array());
+    $typetype_data[$node_type][$typetype] = $bool;
+    variable_set('typetype', $typetype_data);
+  }
+  else {
+    drupal_set_message(t('Invalid typetype (!func): !typetype', array(
+      '!typetype' => $typetype,
+      '!func' => __FUNCTION__
+    )), 'warning');
+  }
+}

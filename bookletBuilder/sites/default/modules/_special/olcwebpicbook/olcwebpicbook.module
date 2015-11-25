@@ -1,0 +1,215 @@
+<?php
+
+function olcwebpicbook_init() {
+
+  if (arg(0).'/'.arg(1).'/'.arg(3) == 'demo/booklet/picture-book') {
+    $colorbox_path = $GLOBALS['base_url'] . '/sites/all/libraries/colorbox';
+    $colorbox_js = $colorbox_path.'/jquery.colorbox-min.js';
+    drupal_add_js($colorbox_js);
+
+    $path = drupal_get_path('module', 'olcwebpicbook');
+    drupal_add_css($path.'/colorbox.css');
+  }
+
+}
+
+function olcwebpicbook_menu() {
+  return array(
+    'demo/booklet' => array(
+      'title' => 'Picture books',
+      'page callback' => '_olcwebpicbook_list_page',
+      'access callback' => TRUE,
+      'type' => MENU_CALLBACK,
+    ),
+    'demo/booklet/%node/picture-book' => array(
+      'title' => 'Picture book',
+      'page callback' => '_olcwebpicbook_book_page',
+      'page arguments' => array(2),
+      'access callback' => TRUE,
+      'type' => MENU_CALLBACK,
+    ),
+    'demo/booklet/%node/picture-book2' => array(
+      'title' => 'Picture book',
+      'page callback' => '_olcwebpicbook_book2_page',
+      'page arguments' => array(2),
+      'access callback' => TRUE,
+      'type' => MENU_CALLBACK,
+    ),
+  );
+}
+
+function _olcwebpicbook_list_page() {
+  $content = '';
+
+  $query = new EntityFieldQuery();
+  $query
+    ->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'section')
+    ->range(0, 200)
+  ;
+
+  $result = $query->execute();
+  if (isset($result['node'])) {
+    $nids = array_keys($result['node']);
+    $nodes = entity_load('node', $nids);
+  }
+  else {
+  }
+
+  $booklets = array();
+  foreach ($nodes as $node) {
+    if (property_exists($node, 'olc_group_content_sentence')) {
+      //dpm($node);
+      $booklets []= $node;
+    }
+  }
+
+  $content .= '<ul>';
+  foreach ($booklets as $booklet) {
+    $content .= '<li>';
+    $content .= "<a href='/demo/booklet/$booklet->nid/picture-book'>Demo A</a> | ";
+    $content .= "<a href='/demo/booklet/$booklet->nid/picture-book2'>Demo B</a> | ";
+    $content .= $booklet->title;
+    $content .= '</li>';
+  }
+  $content .= '</ul>';
+
+  return $content;
+}
+
+function _olcwebpicbook_book_page($booklet) {
+  //dpm($booklet);
+
+  $content = '';
+  $content .= "<h2>$booklet->title</h2>";
+  $content .= "
+    <script>
+      jQuery(document).ready(function(){
+        jQuery('.colorbox-inline').colorbox({inline: true});
+      });
+    </script>
+  ";
+
+  if (property_exists($booklet, 'olc_group_content_sentence')) {
+    
+    $first_page = $booklet->olc_group_content_sentence[0];
+    $content .= '<a class="colorbox-inline start-link" href="#olcwebpicbook-page-'.$first_page.'">Click here to open picture book</a>';
+
+    $pager = array();
+    foreach ($booklet->olc_group_content_sentence as $index => $page) {
+      $page_index = $index + 1;
+      $pager []= "<a class='colorbox-inline' href='#olcwebpicbook-page-$page'>$page_index</a>";
+    }
+    $pager = implode(' ', $pager);
+    $pager = '<div class="olcwebpicbook-pager">'.$pager.'</div>';
+
+    $content .= '<div style="display:none">';
+
+    foreach ($booklet->olc_group_content_sentence as $sentence_index => $sentence_nid) {
+
+      $sentence = node_load($sentence_nid);
+      //dpm($sentence);
+
+      if (!empty($sentence->field_picture)) {
+        $picture = theme('image_style', array(
+          'style_name'=> 'page_letter_squared',
+          'path' => $sentence->field_picture['und'][0]['uri']
+        ));
+      }
+      else {
+        $picture = '';
+      }
+
+      if (!empty($sentence->field_sentence)) {
+        $sentence_text = $sentence->field_sentence['und'][0]['safe_value'];
+      }
+      else {
+        $sentence_text = '';
+      }
+
+      if (!empty($sentence->field_audio)) {
+        $sentence_audio = theme('audiofield_formatter_audiofield_nodownload', array('file' => (object)$sentence->field_audio['und'][0]));
+      }
+      else {
+        $sentence_audio = '';
+      }
+
+      $content .= "
+        <div id='olcwebpicbook-page-$sentence->nid' class='olcwebpicbook-page'>
+          <div>$picture</div>
+          <div>$sentence_text $sentence_audio</div>
+          <div>$pager</div>
+        </div>
+      ";
+
+    }
+    $content .= '</div>';
+  }
+  else {
+  }
+
+  $content .= '<ul><li><a href="/demo/booklet">Back to list of booklets</a></li></ul>'; 
+  return $content;
+}
+
+function _olcwebpicbook_book2_page($booklet) {
+  //dpm($booklet);
+
+  $content = '';
+  $content .= "<h2>$booklet->title</h2>";
+  $content .= "
+    <script>
+      jQuery(document).ready(function(){
+        jQuery('.colorbox-inline').colorbox({inline: true});
+      });
+    </script>
+  ";
+
+  if (property_exists($booklet, 'olc_group_content_sentence')) {
+    
+    foreach ($booklet->olc_group_content_sentence as $sentence_index => $sentence_nid) {
+
+      $sentence = node_load($sentence_nid);
+      //dpm($sentence);
+
+      if (!empty($sentence->field_picture)) {
+        $picture = theme('image_style', array(
+          'style_name'=> 'thumbnail',
+          'path' => $sentence->field_picture['und'][0]['uri']
+        ));
+      }
+      else {
+        $picture = '';
+      }
+
+      if (!empty($sentence->field_sentence)) {
+        $sentence_text = $sentence->field_sentence['und'][0]['safe_value'];
+      }
+      else {
+        $sentence_text = '';
+      }
+
+      if (!empty($sentence->field_audio)) {
+        $sentence_audio = theme('audiofield_formatter_audiofield_nodownload', array('file' => (object)$sentence->field_audio['und'][0]));
+      }
+      else {
+        $sentence_audio = '';
+      }
+
+      $content .= "
+        <div id='olcwebpicbook-page-$sentence->nid' class='olcwebpicbook-page'>
+          <div>$picture</div>
+          <div>$sentence_text $sentence_audio</div>
+        </div>
+      ";
+
+    }
+  }
+  else {
+  }
+
+  $content .= '<ul><li><a href="/demo/booklet">Back to list of booklets</a></li></ul>'; 
+  return $content;
+}
+
+

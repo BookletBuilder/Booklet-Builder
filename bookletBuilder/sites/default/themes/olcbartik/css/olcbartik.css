@@ -1,0 +1,67 @@
+
+#name-and-slogan {
+
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+
+    margin-top: 0;
+    margin-bottom: 28px;
+    margin-left: 0;
+    width: 66.66%;
+    padding-top: 32px;
+    padding-left: 21px;
+}
+
+#site-name {
+}
+
+#main {
+    margin: 0 auto;
+}
+
+th {
+    padding: 4px 9px;
+    line-height: 1em;
+    font-size: 1.2em;
+}
+
+td a {
+}
+
+.view-olc-textbook-chapters .views-field-field-olc-textbook-weight {
+    width: 32px;
+    text-align: right;
+}
+
+.view-olc-textbook-chapters .views-field-view-node {
+    width: 48px;
+    text-align: center;
+    font-weight: bold;
+}
+
+    .view-olc-textbook-chapters .views-field-view-node a {
+        text-decoration: underline;
+    }
+
+.view-olc-textbook-chapters .views-field-nothing {
+    width: 48px;
+    text-align: center;
+    font-weight: bold;
+}
+
+    .view-olc-textbook-chapters .views-field-nothing a {
+        text-decoration: underline;
+    }
+
+.view-olc-textbook-chapters caption {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.view-olc-textbook-chapters td.views-field-title {
+    font-size: 1.2em;
+}
+
+    .view-olc-textbook-chapters td.views-field-title a {
+    }

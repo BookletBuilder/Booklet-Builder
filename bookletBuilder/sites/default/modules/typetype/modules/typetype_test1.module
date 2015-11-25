@@ -1,0 +1,8 @@
+<?php
+
+function typetype_test1_typetype () {
+ return array(
+   'test1' => array('title' => 'Test 1'),
+   'test2' => array('title' => 'Test 2')
+ );
+}

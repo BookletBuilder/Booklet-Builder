@@ -1,0 +1,24 @@
+<?php
+
+function mustache_theme($existing, $type, $theme, $path) {
+  $path = drupal_get_path('module', 'mustache');
+  $base = array(
+    'path' => $path.'/theme'
+  );
+  return array(
+    'mustache_js_template' => $base + array(
+      'variables' => array(
+        'template' => '[TEMPLATE GOES HERE]',
+        'template_id' => NULL,
+        'template_classes' => array(),
+      ),
+      'template' => 'mustache-js-template',
+    ),
+  );
+}
+
+function mustache_js_load() {
+  $mustache_lib = libraries_get_path('mustache_js');
+  drupal_add_js($mustache_lib.'/mustache.js');
+}
+

@@ -1,0 +1,36 @@
+﻿/* Header */
+/* Main */
+/* Button - Dark */
+/* Button - Medium */
+/* Button - Light */
+#header > .section {
+  background-color: #4D7184;
+  /*background-color: rgba(#4D7184, .8);*/
+}
+
+#main-wrapper {
+  background-color: #b6d8ea;
+}
+
+#main {
+  background-color: white;
+}
+
+#secondary-menu-links li a {
+  background-color: white;
+  color: #4D7184;
+}
+
+tr td, tr th {
+  border: 1px solid black;
+}
+
+td {
+  background-color: white;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: inherit;
+}
+
+/*# sourceMappingURL=color-overrides.css.map */
