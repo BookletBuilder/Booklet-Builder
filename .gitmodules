@@ -1,0 +1,3 @@
+[submodule "bookletBuilder/sites/default/modules/Booklet-Builder-Glue-Modules"]
+	path = bookletBuilder/sites/default/modules/Booklet-Builder-Glue-Modules
+	url = https://github.com/BookletBuilder/Booklet-Builder-Glue-Modules.git
