@@ -1,3 +1,21 @@
 [submodule "bookletBuilder/sites/default/modules/Booklet-Builder-Glue-Modules"]
 	path = bookletBuilder/sites/default/modules/Booklet-Builder-Glue-Modules
 	url = https://github.com/BookletBuilder/Booklet-Builder-Glue-Modules.git
+[submodule "bookletBuilder/sites/default/modules/Booklet-Builder-Experimental"]
+	path = bookletBuilder/sites/default/modules/Booklet-Builder-Experimental
+	url = https://github.com/BookletBuilder/Booklet-Builder-Experimental.git
+[submodule "bookletBuilder/sites/default/modules/OLC-Modules"]
+	path = bookletBuilder/sites/default/modules/OLC-Modules
+	url = https://github.com/BookletBuilder/OLC-Modules.git
+[submodule "bookletBuilder/sites/default/modules/Drupal-custom-script-transliteration"]
+	path = bookletBuilder/sites/default/modules/Drupal-custom-script-transliteration
+	url = https://github.com/BookletBuilder/Drupal-custom-script-transliteration.git
+[submodule "bookletBuilder/sites/default/modules/Drupal-type-type"]
+	path = bookletBuilder/sites/default/modules/Drupal-type-type
+	url = https://github.com/BookletBuilder/Drupal-type-type.git
+[submodule "bookletBuilder/sites/default/modules/Drupal-special-character-input-methods"]
+	path = bookletBuilder/sites/default/modules/Drupal-special-character-input-methods
+	url = https://github.com/BookletBuilder/Drupal-special-character-input-methods.git
+[submodule "bookletBuilder/sites/default/themes/Booklet-Builder-Theme"]
+	path = bookletBuilder/sites/default/themes/Booklet-Builder-Theme
+	url = https://github.com/BookletBuilder/Booklet-Builder-Theme.git
