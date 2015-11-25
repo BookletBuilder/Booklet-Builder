@@ -1,21 +1,21 @@
-[submodule "bookletBuilder/sites/default/modules/Booklet-Builder-Glue-Modules"]
-	path = bookletBuilder/sites/default/modules/Booklet-Builder-Glue-Modules
+[submodule "bookletBuilder/sites/default/modules/_booklet_builder"]
+	path = bookletBuilder/sites/default/modules/_booklet_builder
 	url = https://github.com/BookletBuilder/Booklet-Builder-Glue-Modules.git
-[submodule "bookletBuilder/sites/default/modules/Booklet-Builder-Experimental"]
-	path = bookletBuilder/sites/default/modules/Booklet-Builder-Experimental
+[submodule "bookletBuilder/sites/default/modules/_experimental"]
+	path = bookletBuilder/sites/default/modules/_experimental
 	url = https://github.com/BookletBuilder/Booklet-Builder-Experimental.git
-[submodule "bookletBuilder/sites/default/modules/OLC-Modules"]
-	path = bookletBuilder/sites/default/modules/OLC-Modules
+[submodule "bookletBuilder/sites/default/modules/_olc"]
+	path = bookletBuilder/sites/default/modules/_olc
 	url = https://github.com/BookletBuilder/OLC-Modules.git
-[submodule "bookletBuilder/sites/default/modules/Drupal-custom-script-transliteration"]
-	path = bookletBuilder/sites/default/modules/Drupal-custom-script-transliteration
+[submodule "bookletBuilder/sites/default/modules/olctranslit"]
+	path = bookletBuilder/sites/default/modules/olctranslit
 	url = https://github.com/BookletBuilder/Drupal-custom-script-transliteration.git
-[submodule "bookletBuilder/sites/default/modules/Drupal-type-type"]
-	path = bookletBuilder/sites/default/modules/Drupal-type-type
+[submodule "bookletBuilder/sites/default/modules/typetype"]
+	path = bookletBuilder/sites/default/modules/typetype
 	url = https://github.com/BookletBuilder/Drupal-type-type.git
-[submodule "bookletBuilder/sites/default/modules/Drupal-special-character-input-methods"]
-	path = bookletBuilder/sites/default/modules/Drupal-special-character-input-methods
+[submodule "bookletBuilder/sites/default/modules/olckb"]
+	path = bookletBuilder/sites/default/modules/olckb
 	url = https://github.com/BookletBuilder/Drupal-special-character-input-methods.git
-[submodule "bookletBuilder/sites/default/themes/Booklet-Builder-Theme"]
-	path = bookletBuilder/sites/default/themes/Booklet-Builder-Theme
+[submodule "bookletBuilder/sites/default/themes/olcbarik"]
+	path = bookletBuilder/sites/default/themes/olcbartik
 	url = https://github.com/BookletBuilder/Booklet-Builder-Theme.git
